@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8000";
+const API_BASE = 'http://localhost:8000';
 
 const form = document.getElementById("search-form");
 const input = document.getElementById("username");
@@ -29,7 +29,7 @@ form.addEventListener("submit", async (e) => {
   btn.disabled = true;
 
   try {
-    const response = await fetch(`${API_BASE}/users/${username}`);
+    const response = await fetch(`${API_BASE}/api/user/${username}`);
     const data = await response.json();
 
     if (!response.ok) {
@@ -47,7 +47,7 @@ form.addEventListener("submit", async (e) => {
     data.top_repos.forEach((repo) => {
       const li = document.createElement("li");
       li.innerHTML =
-        '<a href="${repo.url" target="_blank" rel="noopener">${repo.name}</a> <span>⭐ ${repo.stars}</span>';
+        `<a href="${repo.url}" target="_blank" rel="noopener">${repo.name}</a> <span>⭐ ${repo.stars}</span>`;
       repoListE1.appendChild(li);
     });
 
