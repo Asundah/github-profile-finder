@@ -1,6 +1,6 @@
 import os
 import httpx
-from fastapi import FastAPi, HTTPException
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
@@ -32,7 +32,7 @@ def health():
 @app.get("/api/user/{username}")
 async def get_user(username: str):
     if not GITHUB_TOKEN:
-        raise HTTPEXception(status_code=500, detail="Server misconfigured: missing Github token")
+        raise HTTPException(status_code=500, detail="Server misconfigured: missing Github token")
 
     headers = {
         "Authorization": f"Bearer {GITHUB_TOKEN}",
@@ -55,7 +55,7 @@ async def get_user(username: str):
 
         # Sort repos by stargazers_count descending, take top 5
         top_repos = sorted(repos_data, key=lambda x: x.get("stargazers_count", 0), reverse=True)[:5]
-        top_repos_clean = [{"name": r["name"], "stars": r["stagazers_count"], "url": r["html_url"]} for r in top_repos]
+        top_repos_clean = [{"name": r["name"], "stars": r["stargazers_count"], "url": r["html_url"]} for r in top_repos]
 
         return {
             "avatar_url": user_data.get("avatar_url"),
